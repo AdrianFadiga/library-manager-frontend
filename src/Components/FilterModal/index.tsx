@@ -10,7 +10,7 @@ interface Props {
     categories: ICategory[]
 }
 
-const FilterForm: React.FC<Props> = ({showModal, setShowModal, categories}) => {
+const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => {
   const [title, setTitle] = useState<string>('');
   const [categoryId, setCategoryId] = useState<string>(categories[0].id);
   return (
@@ -57,4 +57,4 @@ const FilterForm: React.FC<Props> = ({showModal, setShowModal, categories}) => {
   );
 };
 
-export default FilterForm;
+export default FilterModal;

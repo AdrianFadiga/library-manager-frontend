@@ -1,6 +1,6 @@
 import Header from '../../Components/Header';
 import style from './Books.module.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestAPI } from '../../Services';
 import { IBook } from '../../Interfaces/IBook';
@@ -10,11 +10,12 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import CreateBookModal from '../../Components/CreateBookModal';
 import { ICategory } from '../../Interfaces/ICategory';
-import FilterForm from '../../Components/FilterForm/FilterForm';
+import FilterModal from '../../Components/FilterModal';
+import { IContext, MyContext } from '../../context/MyContext';
 
 function Books() {
   const navigate = useNavigate();
-  const [bookList, setBookList] = useState<IBook[]>([]);
+  const {books, setBooks} = useContext(MyContext) as IContext;
   const [categories, setCategories] = useState<ICategory[]>([{id: '9837c100-9021-4f97-9ef6-8ec5fa35ba14', category: 'Romance'}]);
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
@@ -29,7 +30,7 @@ function Books() {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
     if (!token) navigate('/');
     const response = await requestAPI<IBook[]>('GET', {}, 'books', {Authorization: `Bearer ${token}`});
-    setBookList(response.data);
+    setBooks(response.data);
   };
 
   useEffect(() => {
@@ -50,7 +51,7 @@ function Books() {
           ?
         </Button>
       </Container>
-      <FilterForm 
+      <FilterModal 
         categories={categories} 
         showModal={showFilterModal}
         setShowModal={setShowFilterModal}
@@ -62,7 +63,7 @@ function Books() {
       />
       <Container>
         <Row xs="1" sm="2" md="3" lg="4" xl="5" xxl="6">
-          {bookList.map((book) => (  
+          {books.map((book) => (  
             <Card 
               key={book.id}            
             >
