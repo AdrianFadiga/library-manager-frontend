@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ICategory } from '../../Interfaces/ICategory';
+import { IContext, MyContext } from '../../context/MyContext';
+import { requestAPI } from '../../Services';
+import { IBook } from '../../Interfaces/IBook';
 
 interface Props {
     showModal: boolean,
@@ -13,6 +16,17 @@ interface Props {
 const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => {
   const [title, setTitle] = useState<string>('');
   const [categoryId, setCategoryId] = useState<string>(categories[0].id);
+  const { setBooks, setShowRemoveFilterButton } = useContext(MyContext) as IContext; 
+
+  const findByQuery = async (parameter: string, query: string) => {
+    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
+    const response = await requestAPI<IBook[]>('GET', {}, `books/filter?${parameter}=${query}`, {
+      Authorization: `Bearer ${token}`
+    });
+    setBooks(response.data);
+    setShowRemoveFilterButton(true);
+  };
+
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
@@ -29,7 +43,8 @@ const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => 
               value={title}
               style={{maxWidth: '200px'}}
             />
-            <Button>
+            <Button
+              onClick={() => findByQuery('title', title)}>
             Find
             </Button>
           </Form.Label>
@@ -48,7 +63,8 @@ const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => 
               ))}
             </Form.Select>
           </Form.Label>
-          <Button>
+          <Button
+            onClick={() => findByQuery('categoryId', categoryId)}>
             Find
           </Button>
         </Form>
