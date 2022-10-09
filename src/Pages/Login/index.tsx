@@ -21,7 +21,7 @@ function Login() {
       const {data} = await requestAPI<IToken>('POST', {email, password}, 'auth/signin');
       const token = data.access_token;
       localStorage.setItem('authLibrary', JSON.stringify(token));
-      navigate('/home');
+      navigate('/books');
     } catch (err: any) {
       setShowError(true);
       setErrorMessage(err.data.message);     
