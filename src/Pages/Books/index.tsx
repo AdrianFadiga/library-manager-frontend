@@ -7,175 +7,23 @@ import { IBook } from '../../Interfaces/IBook';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import CreateBookModal from '../../Components/CreateBookModal';
+import { ICategory } from '../../Interfaces/ICategory';
+import FilterForm from '../../Components/FilterForm/FilterForm';
 
 function Books() {
   const navigate = useNavigate();
   const [bookList, setBookList] = useState<IBook[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([{id: '9837c100-9021-4f97-9ef6-8ec5fa35ba14', category: 'Romance'}]);
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
 
-  const book = [
-    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },    {
-      id: '73fca9f3-8f89-4fa9-ad25-3a7d160ccfbc',
-      title: 'O Conde de Monte Cristo',
-      categoryId: '9837c100-9021-4f97-9ef6-8ec5fa35ba14',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      imageUrl: 'https://m.media-amazon.com/images/I/81ZswN9PVPL.jpg',
-    },
-  ];
+  const getCategories = async () => {
+    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
+    const response = await requestAPI<ICategory[]>('GET', {}, 'categories', {Authorization: `Bearer ${token}`});
+    setCategories(response.data);
+  };
 
   const getBooks = async () => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
@@ -186,13 +34,34 @@ function Books() {
 
   useEffect(() => {
     getBooks();
+    getCategories();
   }, []);
 
   return (
     <section className={style.bookPage}>
       <Header />
       <Container>
-        <Row lg="4" xl="5" xxl="6">
+        <Button 
+          size="lg"
+          onClick={() => setShowCreateModal(true)}>
+          +
+        </Button>
+        <Button size="lg" onClick={() => setShowFilterModal(true)}>
+          ?
+        </Button>
+      </Container>
+      <FilterForm 
+        categories={categories} 
+        showModal={showFilterModal}
+        setShowModal={setShowFilterModal}
+      />
+      <CreateBookModal
+        categories={categories} 
+        showModal={showCreateModal}
+        setShowModal={setShowCreateModal}
+      />
+      <Container>
+        <Row xs="1" sm="2" md="3" lg="4" xl="5" xxl="6">
           {bookList.map((book) => (  
             <Card 
               key={book.id}            
@@ -209,7 +78,6 @@ function Books() {
           ))}          
         </Row>
       </Container>
-
     </section>
   );
 }
