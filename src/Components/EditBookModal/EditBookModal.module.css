@@ -1,0 +1,21 @@
+.editForm {
+    display: grid;
+    gap: 8px
+}
+
+.formContainer {
+    display: grid;
+    justify-content: space-around;
+}
+
+.formInput {
+    margin-top: 5px
+}
+
+.formSelect {
+    margin-top: 5px
+}
+
+.formButton {
+    min-width: 150px;
+}

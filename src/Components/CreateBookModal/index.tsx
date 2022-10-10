@@ -1,9 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 import { useEffect, useState } from 'react';
 import { ICategory } from '../../Interfaces/ICategory';
 import { requestAPI } from '../../Services';
+import style from './CreateBookModal.module.css';
 
 interface Props {
     showModal: boolean,
@@ -44,35 +46,53 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Add book</Modal.Title>
+        <Modal.Title
+          className={style.modalHeader}
+        >
+          Add book
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <Form.Label>Book title</Form.Label>
-          <Form.Control 
-            type="text" 
-            placeholder="title" 
-            onChange={({target}) => setTitle(target.value)}
-            value={title}
-          />
-          <Form.Select
-            value={categoryId}
-            onChange={({target}) => setCategoryId(target.value)}
+        <Form className={style.form}>
+          <Form.Label
           >
-            {categories.map(({category, id}) => (
-              <option
-                key={id} 
-                value={id}>{category}</option>
-            ))}
-          </Form.Select>
+            Book title
+            <Form.Control
+              className={style.formControl} 
+              type="text" 
+              placeholder="title" 
+              onChange={({target}) => setTitle(target.value)}
+              value={title}
+            />
+          </Form.Label>
+          <Form.Label>
+          Book category
+            <Form.Select
+              className={style.formSelect} 
+              value={categoryId}
+              onChange={({target}) => setCategoryId(target.value)}
+            >
+              {categories.map(({category, id}) => (
+                <option
+                  key={id} 
+                  value={id}>{category}</option>
+              ))}
+            </Form.Select>
+          </Form.Label>
           <Form.Control type="file"
             onChange={({target}: any) => setFile(target.files[0])}
-          ></Form.Control>
+          />
+          <Container
+            className={style.formContainer}>
+            <Button
+              className={style.button}
+              disabled={isDisabled}
+              onClick={() => createBook()}
+            >
+            Submit
+            </Button>
+          </Container>
         </Form>
-        <Button
-          disabled={isDisabled}
-          onClick={() => createBook()}
-        >Submit</Button>
       </Modal.Body>
     </Modal>
   );

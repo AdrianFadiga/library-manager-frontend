@@ -6,6 +6,7 @@ import { IContext, MyContext } from '../../context/MyContext';
 import Card from 'react-bootstrap/Card';
 import EditBookModal from '../EditBookModal';
 import DeleteBookModal from '../DeleteBookModal';
+import style from './BookCard.module.css';
 
 interface Props {
     book: IBook
@@ -17,10 +18,11 @@ const BookCard: React.FC<Props> = ({book}) => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   return (
     <Card 
-      key={book.id}            
+      style={{marginBottom: '5px'}}          
     >
       {role === 'admin' && 
-      <Card.Header>
+      <Card.Header
+        className={style.cardHeader}>
         <NavDropdown
           title="..."
         >
@@ -36,15 +38,17 @@ const BookCard: React.FC<Props> = ({book}) => {
         </NavDropdown>
       </Card.Header>
       }
-      <Card.Img 
+      <Card.Img
+        className={style.cardImg} 
         variant="top"
         src={book.imageUrl}
-        style={{height: '80%'}}
       />
       <Card.Title
         style={{height: '20%'}}
       >{book.title}</Card.Title>
-      <Card.Footer>
+      <Card.Footer
+        className={style.cardFooter}
+      >
         <Button 
           size="sm"
           disabled={book.bookings.length > 0}

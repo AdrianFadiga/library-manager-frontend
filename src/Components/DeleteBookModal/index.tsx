@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
 import { requestAPI } from '../../Services';
+import style from './DeleteBookModal.module.css';
 
 interface Props {
     bookId: string
@@ -21,10 +23,17 @@ const DeleteBookModal: React.FC<Props> = ({bookId, showModal, setShowModal}) => 
         <Modal.Title>Confirm delete</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Button
-          variant="danger"
-          onClick={() => deleteBook()}
-        >Delete</Button>
+        <Container
+          className={style.modalContainer}
+        >
+          <Button
+            className={style.modalButton}
+            variant="danger"
+            onClick={() => deleteBook()}
+          >
+            Delete
+          </Button>
+        </Container>
       </Modal.Body>
     </Modal>
   );

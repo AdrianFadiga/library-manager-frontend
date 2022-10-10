@@ -10,10 +10,10 @@ interface Props {
 
 const BooksContainer: React.FC<Props> = ({books}) => {
   return (
-    <Container>
-      <Row xs="1" sm="2" md="3" lg="4" xl="5" xxl="6">
+    <Container fluid="md">
+      <Row xs="1" sm="2" md="3" lg="4" xl="5" xxl="7">
         {books.map((book) => (  
-          <BookCard 
+          <BookCard
             key={book.id}
             book={book}
           />

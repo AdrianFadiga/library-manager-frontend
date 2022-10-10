@@ -1,0 +1,13 @@
+.cardFooter {
+    display: flex;
+    justify-content: center;
+}
+
+.cardImg {
+    height: 80%;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: flex-end;
+}
