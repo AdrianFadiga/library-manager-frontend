@@ -1,54 +1,55 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { useEffect, useState } from 'react';
-import { ICategory } from '../../Interfaces/ICategory';
+import { useContext, useEffect, useState } from 'react';
 import { requestAPI } from '../../Services';
+import { IContext, MyContext } from '../../context/MyContext';
+
+// Ctrl c Ctrl v do CreateBookModal
+// Qdo sobrar tempo -> refatorar para aproveitar o mesmo componente
 
 interface Props {
     showModal: boolean,
     setShowModal: (showModal: boolean) => void
-    categories: ICategory[]
+    categoryId: string
+    bookId: string
 }
 
-const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories}) => {
-  const [title, setTitle] = useState<string>('');
-  const [categoryId, setCategoryId] = useState<string>(categories[0].id);
-  const [file, setFile] = useState<File>();
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-  const createBook = async () => {
+
+const EditBookModal: React.FC<Props> = ({showModal, setShowModal, categoryId, bookId}) => {
+  const {categories} = useContext(MyContext) as IContext;
+  const [title, setTitle] = useState<string>('');
+  const [newCategoryId, setNewCategoryId] = useState<string>(categoryId);
+  const [file, setFile] = useState<File>();
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const validateEdit = () => {
+    if (title && title.length < 5) return setIsDisabled(true);
+    return setIsDisabled(false);
+  };
+
+  useEffect(() => {
+    validateEdit();
+  }, [title]);
+
+  const editBook = async () => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    await requestAPI('POST', {categoryId, title, file}, 'books', {
+    await requestAPI('PATCH', {categoryId: newCategoryId, title, file}, `books/${bookId}`, {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data',
     });
     window.location.reload();
   };
 
-  const validateCreateBook = () => {
-    const FIVE_MB = 5000000;
-    const validate = (
-      !file?.type.includes('image') 
-      || file?.size > FIVE_MB
-      || title.length < 3
-      || !categoryId
-    );
-    setIsDisabled(validate);
-  };
-
-  useEffect(() => {
-    validateCreateBook();
-  }, [title, categoryId, file]);
-
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Add book</Modal.Title>
+        <Modal.Title>Edit book</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Label>Book title</Form.Label>
+          <Form.Label>New title</Form.Label>
           <Form.Control 
             type="text" 
             placeholder="title" 
@@ -56,8 +57,8 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
             value={title}
           />
           <Form.Select
-            value={categoryId}
-            onChange={({target}) => setCategoryId(target.value)}
+            value={newCategoryId}
+            onChange={({target}) => setNewCategoryId(target.value)}
           >
             {categories.map(({category, id}) => (
               <option
@@ -70,12 +71,12 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
           ></Form.Control>
         </Form>
         <Button
+          onClick={() => editBook()}
           disabled={isDisabled}
-          onClick={() => createBook()}
         >Submit</Button>
       </Modal.Body>
     </Modal>
   );
 };
 
-export default CreateBookModal;
+export default EditBookModal;
