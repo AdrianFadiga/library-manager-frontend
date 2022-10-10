@@ -15,7 +15,7 @@ import BooksContainer from '../../Components/BooksContainer';
 
 function Books() {
   const navigate = useNavigate();
-  const {books, setBooks, setRole, categories, setCategories} = useContext(MyContext) as IContext;
+  const {books, setBooks, setRole, categories, setCategories, setLoggedId} = useContext(MyContext) as IContext;
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
   
@@ -24,6 +24,7 @@ function Books() {
     if (!token) navigate('/');
     const response = await requestAPI<IUser>('GET', {}, 'auth/me', {Authorization: `Bearer ${token}`});
     setRole(response.data.role);
+    setLoggedId(response.data.id);
   };
 
   const getCategories = async () => {

@@ -11,6 +11,7 @@ const MyProvider: React.FC<Props> = ({children}) => {
   const [books, setBooks] = useState<IBook[]>([]);
   const [showRemoveFilterButton, setShowRemoveFilterButton] = useState<boolean>(false);
   const [role, setRole] = useState<string>('');
+  const [loggedId, setLoggedId] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([{id: '9837c100-9021-4f97-9ef6-8ec5fa35ba14', category: 'Romance'}]);
 
   const state = {
@@ -21,7 +22,9 @@ const MyProvider: React.FC<Props> = ({children}) => {
     role,
     setRole,
     categories,
-    setCategories
+    setCategories,
+    loggedId,
+    setLoggedId,
   };
   return (
     <MyContext.Provider value={state}>

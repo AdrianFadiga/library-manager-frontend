@@ -7,6 +7,8 @@ import Card from 'react-bootstrap/Card';
 import EditBookModal from '../EditBookModal';
 import DeleteBookModal from '../DeleteBookModal';
 import style from './BookCard.module.css';
+import UserBookButton from '../UserBookButton';
+import AdminBookButton from '../AdminBookButton';
 
 interface Props {
     book: IBook
@@ -16,6 +18,7 @@ const BookCard: React.FC<Props> = ({book}) => {
   const { role } = useContext(MyContext) as IContext;
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const isBooked = book.bookings.length > 0;
   return (
     <Card 
       style={{marginBottom: '5px'}}          
@@ -49,12 +52,20 @@ const BookCard: React.FC<Props> = ({book}) => {
       <Card.Footer
         className={style.cardFooter}
       >
-        <Button 
-          size="sm"
-          disabled={book.bookings.length > 0}
-        >
-          {book.bookings.length > 0 ? 'Booked' : 'Book?'}
-        </Button>
+        { role === 'user' &&  
+        <UserBookButton 
+          isBooked={isBooked}
+          bookId={book.id}
+        />
+        }
+        {
+          role === 'admin' &&
+          <AdminBookButton
+            isBooked={isBooked}
+            bookId={book.id}
+            booking={book.bookings}
+          />
+        }
       </Card.Footer>
       <EditBookModal 
         showModal={showEditModal}
