@@ -1,10 +1,8 @@
 import Header from '../../Components/Header';
-import style from './Books.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestAPI } from '../../Services';
 import { IBook } from '../../Interfaces/IBook';
-
 import CreateBookModal from '../../Components/CreateBookModal';
 import { ICategory } from '../../Interfaces/ICategory';
 import FilterModal from '../../Components/FilterModal';
@@ -12,6 +10,7 @@ import { IContext, MyContext } from '../../context/MyContext';
 import { IUser } from '../../Interfaces/IUser';
 import BooksButtonsContainer from '../../Components/BooksButtonsContainer';
 import BooksContainer from '../../Components/BooksContainer';
+import Container from 'react-bootstrap/Container';
 
 function Books() {
   const navigate = useNavigate();
@@ -45,7 +44,8 @@ function Books() {
   }, []);
 
   return (
-    <section className={style.bookPage}>
+    // <section className={style.bookPage}>
+    <Container fluid="true">
       <Header />
       <BooksButtonsContainer 
         setShowCreateModal={setShowCreateModal}
@@ -64,7 +64,7 @@ function Books() {
       <BooksContainer 
         books={books}
       />
-    </section>
+    </Container>
   );
 }
 
