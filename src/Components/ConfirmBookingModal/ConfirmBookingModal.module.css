@@ -1,0 +1,8 @@
+.modalContainer {
+    display: grid;
+    justify-content: center;
+}
+
+.modalButton {
+    min-width: 150px
+}
