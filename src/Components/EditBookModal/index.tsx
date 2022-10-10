@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 import { useContext, useEffect, useState } from 'react';
 import { requestAPI } from '../../Services';
 import { IContext, MyContext } from '../../context/MyContext';
@@ -21,10 +21,12 @@ interface Props {
 
 const EditBookModal: React.FC<Props> = ({showModal, setShowModal, categoryId, bookId}) => {
   const {categories} = useContext(MyContext) as IContext;
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string | undefined>('');
   const [newCategoryId, setNewCategoryId] = useState<string>(categoryId);
   const [file, setFile] = useState<File>();
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const validateEdit = () => {
     if (title && title.length < 5) return setIsDisabled(true);
@@ -36,16 +38,31 @@ const EditBookModal: React.FC<Props> = ({showModal, setShowModal, categoryId, bo
   }, [title]);
 
   const editBook = async () => {
-    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    await requestAPI('PATCH', {categoryId: newCategoryId, title, file}, `books/${bookId}`, {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
-    });
-    window.location.reload();
+    try {
+      const token = JSON.parse(localStorage.getItem('authLibrary') as string);
+      let newTitle = title;
+      if (title === '') newTitle = undefined;
+      await requestAPI('PATCH', {categoryId: newCategoryId, title: newTitle, file}, `books/${bookId}`, {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      });
+      window.location.reload();
+    } catch (err: any) {
+      setShowError(true);
+      setErrorMessage(err.data.message);  
+    }
   };
 
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
+      {showError &&
+      <Alert variant='primary'
+        onClose={() => setShowError(false)}
+        dismissible
+      >
+        {errorMessage}
+      </Alert>
+      }
       <Modal.Header closeButton>
         <Modal.Title>Edit book</Modal.Title>
       </Modal.Header>

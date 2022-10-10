@@ -43,6 +43,9 @@ const BookCard: React.FC<Props> = ({book}) => {
         className={style.cardImg} 
         variant="top"
         src={book.imageUrl}
+
+        style={{height: '70%', objectFit: 'cover'}}
+
       />
       <Card.Title
         style={{height: '20%'}}
