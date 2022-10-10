@@ -25,6 +25,8 @@ const AdminBookButton: React.FC<Props> = ({isBooked, bookId, booking}) => {
     window.location.reload();
   };
 
+  
+
   return (
     <Button
       variant={isBooked ? 'warning' : 'success'}

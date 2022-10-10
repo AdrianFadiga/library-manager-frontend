@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IBook } from '../Interfaces/IBook';
 import { ICategory } from '../Interfaces/ICategory';
+import { IUser } from '../Interfaces/IUser';
 import { MyContext } from './MyContext';
 
 interface Props {
@@ -13,6 +14,8 @@ const MyProvider: React.FC<Props> = ({children}) => {
   const [role, setRole] = useState<string>('');
   const [loggedId, setLoggedId] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([{id: '9837c100-9021-4f97-9ef6-8ec5fa35ba14', category: 'Romance'}]);
+  const [users, setUsers] = useState<IUser[]>([]);
+
 
   const state = {
     books,
@@ -25,6 +28,8 @@ const MyProvider: React.FC<Props> = ({children}) => {
     setCategories,
     loggedId,
     setLoggedId,
+    users,
+    setUsers
   };
   return (
     <MyContext.Provider value={state}>

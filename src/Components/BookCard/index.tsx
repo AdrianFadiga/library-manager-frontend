@@ -1,5 +1,4 @@
 import { IBook } from '../../Interfaces/IBook';
-import Button from 'react-bootstrap/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useContext, useState } from 'react';
 import { IContext, MyContext } from '../../context/MyContext';
@@ -7,8 +6,7 @@ import Card from 'react-bootstrap/Card';
 import EditBookModal from '../EditBookModal';
 import DeleteBookModal from '../DeleteBookModal';
 import style from './BookCard.module.css';
-import UserBookButton from '../UserBookButton';
-import AdminBookButton from '../AdminBookButton';
+import BookButton from '../BookButton';
 
 interface Props {
     book: IBook
@@ -52,20 +50,12 @@ const BookCard: React.FC<Props> = ({book}) => {
       <Card.Footer
         className={style.cardFooter}
       >
-        { role === 'user' &&  
-        <UserBookButton 
-          isBooked={isBooked}
+        <BookButton
+          book={book} 
           bookId={book.id}
+          role={role}
+          isBooked={isBooked}
         />
-        }
-        {
-          role === 'admin' &&
-          <AdminBookButton
-            isBooked={isBooked}
-            bookId={book.id}
-            booking={book.bookings}
-          />
-        }
       </Card.Footer>
       <EditBookModal 
         showModal={showEditModal}
