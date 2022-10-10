@@ -2,10 +2,12 @@ import { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
 import { ICategory } from '../../Interfaces/ICategory';
 import { IContext, MyContext } from '../../context/MyContext';
 import { requestAPI } from '../../Services';
 import { IBook } from '../../Interfaces/IBook';
+import style from './FilterModal.module.css';
 
 interface Props {
     showModal: boolean,
@@ -28,33 +30,41 @@ const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => 
   };
 
   return (
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
+    <Modal 
+      show={showModal} onHide={() => setShowModal(false)}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Looking for a book?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form
+          className={style.form}
+        >
           <Form.Label>
-                Find by title
+                Filter by title
             <Form.Control 
               type="text" 
               placeholder="Title" 
               onChange={({target}) => setTitle(target.value)}
               value={title}
-              style={{maxWidth: '200px'}}
+              className={style.formInput}
             />
-            <Button
-              onClick={() => findByQuery('title', title)}>
-            Find
-            </Button>
           </Form.Label>
-        </Form>
-        <Form>
+          <Container
+            className={style.formContainer}
+          >
+            <Button
+              className={style.formButton}
+              onClick={() => findByQuery('title', title)}>
+            Filter
+            </Button>
+          </Container>
           <Form.Label>
-        Find by category
+        Filter by category
             <Form.Select
               value={categoryId}
               onChange={({target}) => setCategoryId(target.value)}
+              className={style.formSelect}
             >
               {categories.map(({category, id}) => (
                 <option
@@ -63,10 +73,14 @@ const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => 
               ))}
             </Form.Select>
           </Form.Label>
-          <Button
-            onClick={() => findByQuery('categoryId', categoryId)}>
-            Find
-          </Button>
+          <Container
+            className={style.formContainer}>
+            <Button
+              className={style.formButton}
+              onClick={() => findByQuery('categoryId', categoryId)}>
+            Filter
+            </Button>
+          </Container>
         </Form>
       </Modal.Body>
     </Modal>

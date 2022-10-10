@@ -1,0 +1,27 @@
+.modalHeader {
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    display: grid;
+    gap: 10px
+}
+
+.formControl {
+    margin-top: 8px;
+}
+
+.formSelect {
+    margin-top: 8px;
+}
+
+.button {
+    width: 30%;
+    min-width: 150px
+}
+
+.formContainer {
+    display: flex;
+    justify-content: space-around;
+}

@@ -1,0 +1,22 @@
+.form {
+    display: grid;
+    gap: 10px
+}
+
+.formInput {
+    margin-top: 5px
+}
+
+.formSelect {
+    margin-top: 5px
+}
+
+.formButton {
+    width: 80%;
+    min-width: 150px
+}
+
+.formContainer {
+    display: grid;
+    justify-content: space-around;
+}

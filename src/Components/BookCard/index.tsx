@@ -1,11 +1,12 @@
 import { IBook } from '../../Interfaces/IBook';
-import Button from 'react-bootstrap/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useContext, useState } from 'react';
 import { IContext, MyContext } from '../../context/MyContext';
 import Card from 'react-bootstrap/Card';
 import EditBookModal from '../EditBookModal';
 import DeleteBookModal from '../DeleteBookModal';
+import style from './BookCard.module.css';
+import BookButton from '../BookButton';
 
 interface Props {
     book: IBook
@@ -15,12 +16,14 @@ const BookCard: React.FC<Props> = ({book}) => {
   const { role } = useContext(MyContext) as IContext;
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const isBooked = book.bookings.length > 0;
   return (
     <Card 
-      key={book.id}            
+      style={{marginBottom: '5px'}}          
     >
       {role === 'admin' && 
-      <Card.Header>
+      <Card.Header
+        className={style.cardHeader}>
         <NavDropdown
           title="..."
         >
@@ -36,21 +39,26 @@ const BookCard: React.FC<Props> = ({book}) => {
         </NavDropdown>
       </Card.Header>
       }
-      <Card.Img 
+      <Card.Img
+        className={style.cardImg} 
         variant="top"
         src={book.imageUrl}
+
         style={{height: '70%', objectFit: 'cover'}}
+
       />
       <Card.Title
         style={{height: '20%'}}
       >{book.title}</Card.Title>
-      <Card.Footer>
-        <Button 
-          size="sm"
-          disabled={book.bookings.length > 0}
-        >
-          {book.bookings.length > 0 ? 'Booked' : 'Book?'}
-        </Button>
+      <Card.Footer
+        className={style.cardFooter}
+      >
+        <BookButton
+          book={book} 
+          bookId={book.id}
+          role={role}
+          isBooked={isBooked}
+        />
       </Card.Footer>
       <EditBookModal 
         showModal={showEditModal}

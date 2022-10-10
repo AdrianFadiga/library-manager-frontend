@@ -2,25 +2,25 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import { requestAPI } from '../../Services';
-import style from './DeleteBookModal.module.css';
+import style from './ReturnBookModal.module.css';
 
 interface Props {
-    bookId: string
     showModal: boolean
     setShowModal: (value: boolean) => void
+    bookingId: string
 }
 
-const DeleteBookModal: React.FC<Props> = ({bookId, showModal, setShowModal}) => {
-  const deleteBook = async () => {
+const ReturnBookModal: React.FC<Props> = ({showModal, setShowModal, bookingId}) => {
+  const returnBook = async () => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    await requestAPI('DELETE', {}, `books/${bookId}`, {Authorization: `Bearer ${token}`});
+    await requestAPI('PATCH', {}, `bookings/${bookingId}`, {Authorization: `Bearer ${token}`});
     window.location.reload();
   };
   
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Confirm delete</Modal.Title>
+        <Modal.Title>Confirm return</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container
@@ -28,14 +28,14 @@ const DeleteBookModal: React.FC<Props> = ({bookId, showModal, setShowModal}) => 
         >
           <Button
             className={style.modalButton}
-            variant="danger"
-            onClick={() => deleteBook()}
+            variant="warning"
+            onClick={() => returnBook()}
           >
-            Delete
+            Confirm
           </Button>
         </Container>
       </Modal.Body>
     </Modal>
   );
 };
-export default DeleteBookModal;
+export default ReturnBookModal;

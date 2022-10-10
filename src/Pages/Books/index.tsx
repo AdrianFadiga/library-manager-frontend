@@ -14,15 +14,23 @@ import Container from 'react-bootstrap/Container';
 
 function Books() {
   const navigate = useNavigate();
-  const {books, setBooks, setRole, categories, setCategories} = useContext(MyContext) as IContext;
+  const {books, setBooks, setRole, categories, setCategories, setLoggedId, setUsers} = useContext(MyContext) as IContext;
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
+
+  const getAllUsers = async () => {
+    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
+    const response = await requestAPI<IUser[]>('GET', {}, 'users/filter?role=user', {Authorization: `Bearer ${token}`});
+    setUsers(response.data);
+  };
   
   const verifyUser = async () => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
     if (!token) navigate('/');
     const response = await requestAPI<IUser>('GET', {}, 'auth/me', {Authorization: `Bearer ${token}`});
+    if (response.data.role === 'admin') getAllUsers();
     setRole(response.data.role);
+    setLoggedId(response.data.id);
   };
 
   const getCategories = async () => {
