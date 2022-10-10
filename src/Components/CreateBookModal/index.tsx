@@ -41,10 +41,6 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
     validateCreateBook();
   }, [title, categoryId, file]);
 
-  useEffect(() => {
-    console.log(categories);
-  }, []);
-
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
