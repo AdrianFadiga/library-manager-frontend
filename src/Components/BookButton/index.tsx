@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { IBook } from '../../Interfaces/IBook';
+import ConfirmBookingModal from '../ConfirmBookingModal';
 import CreateBookingModal from '../CreateBookingModal';
 import ReturnBookModal from '../ReturnBookModal';
 
@@ -15,6 +16,7 @@ interface Props {
 const BookButton: React.FC<Props> = ({bookId, role, isBooked, book}) => {
   const [showReturnModal, setShowReturnModal] = useState<boolean>(false);
   const [showCreateBookingModal, setShowCreateBookingModal] = useState<boolean>(false);
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
   const bookingId = book.bookings[0]?.id;
 
@@ -37,11 +39,8 @@ const BookButton: React.FC<Props> = ({bookId, role, isBooked, book}) => {
   const action = () => {
     if (role === 'admin' && isBooked) return setShowReturnModal(true);
     if (role === 'admin' && !isBooked) return setShowCreateBookingModal(true);
-    return openUserModal(); 
+    return setShowConfirmModal(true); 
   };
-
-  const openAdminModal = () => {};
-  const openUserModal = () => {};
 
   return (
     <>
@@ -60,6 +59,11 @@ const BookButton: React.FC<Props> = ({bookId, role, isBooked, book}) => {
       <CreateBookingModal 
         showModal={showCreateBookingModal}
         setShowModal={setShowCreateBookingModal}
+        bookId={bookId}      
+      />      
+      <ConfirmBookingModal 
+        showModal={showConfirmModal}
+        setShowModal={setShowConfirmModal}
         bookId={bookId}      
       />
     </> 
