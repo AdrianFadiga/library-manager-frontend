@@ -1,3 +1,13 @@
+type Book = {
+    title: string
+    id: string
+}
+
+type User = {
+    name: string
+    id: string
+}
+
 export interface IBooking {
     id: string
     userId: string
@@ -5,4 +15,6 @@ export interface IBooking {
     bookingDate: string
     returnDate: string
     status: string
+    book: Book
+    user: User
 }
