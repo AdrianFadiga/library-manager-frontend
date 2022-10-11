@@ -1,18 +1,23 @@
-# library-manager-frontend
+# Library Manager Frontend
 
-Repositório BackEnd:
+## Description
+
+Library management application.
+
+## Installation
+
+```bash
+$ git clone git@github.com:AdrianFadiga/library-manager-frontend.git
+$ cd library-manager-frontend
+$ npm install
+```
+## Running the app
+
+```bash
+# development
+$ npm run dev
+```
+
+## Running Front-End
+
 https://github.com/AdrianFadiga/library-manager-backend
-
-## Para utilizar a aplicação:
-inicializar o BackEnd, conforme instruções no repositório acima.
-
-### Usuários cadastrados:
-
-email: admin@teste.com
-</br>
-senha: teste
-
-email: usuario@teste.com
-</br>
-senha: teste
-
