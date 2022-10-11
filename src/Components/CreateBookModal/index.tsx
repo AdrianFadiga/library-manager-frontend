@@ -34,6 +34,7 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
       !file?.type.includes('image') 
       || file?.size > FIVE_MB
       || title.length < 3
+      || title.length > 35
       || !categoryId
     );
     setIsDisabled(validate);
@@ -60,7 +61,8 @@ const CreateBookModal: React.FC<Props> = ({showModal, setShowModal, categories})
             <Form.Control
               className={style.formControl} 
               type="text" 
-              placeholder="title" 
+              placeholder="title"
+              maxLength={35} 
               onChange={({target}) => setTitle(target.value)}
               value={title}
             />
