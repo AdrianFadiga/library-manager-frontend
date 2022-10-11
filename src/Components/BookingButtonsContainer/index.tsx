@@ -1,7 +1,5 @@
-import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { IContext, MyContext } from '../../context/MyContext';
 import { CgAddR } from 'react-icons/cg';
 
 interface Props {
@@ -9,7 +7,6 @@ interface Props {
 }
 
 const BookingButtonsContainer: React.FC<Props> = ({setShowFilterModal}) => {
-  const { showRemoveFilterButton } = useContext(MyContext) as IContext;
 
   return (
     <Container
@@ -23,11 +20,6 @@ const BookingButtonsContainer: React.FC<Props> = ({setShowFilterModal}) => {
       <Button size="lg" onClick={() => setShowFilterModal(true)}>
         <CgAddR />
       </Button>
-      {showRemoveFilterButton && 
-        <Button 
-          variant="danger"
-          onClick={() => window.location.reload()}>Remove Filters</Button>
-      }
     </Container>
   );
 };
