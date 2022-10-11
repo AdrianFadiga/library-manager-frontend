@@ -22,8 +22,8 @@ const UserBookingsTable: React.FC<Props> = ({bookings}) => {
           <tr key={id}>
             <td>{i + 1}</td>
             <td>{title}</td>
-            <td>{bookingDate}</td>
-            <td>{returnDate}</td>
+            <td>{new Date(bookingDate).toLocaleDateString()}</td>
+            <td>{new Date(returnDate).toLocaleDateString()}</td>
             <td>{status}</td>
           </tr>
         ))}

@@ -10,7 +10,6 @@ interface Props {
   showFilterModal: boolean
   setShowFilterModal: (value: boolean) => void
   action: (query: string) => Promise<void>
-  setQuery: (value: string) => void
   books: IBook[]
   users: IUser[]
   role: string
