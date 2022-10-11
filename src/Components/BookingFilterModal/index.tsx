@@ -13,23 +13,24 @@ interface Props {
   setQuery: (value: string) => void
   books: IBook[]
   users: IUser[]
+  role: string
 }
 
 const BookingFilterModal: React.FC<Props> = ({
-  action, showFilterModal, setShowFilterModal, 
-  setQuery, books, users
+  action, showFilterModal, setShowFilterModal, books, users, role
 }) => {
-  const [filterParams, setFilterParams] = useState<any>({});
+  const initialState = ({
+    status: 'status=active',
+    bookQuery: '&',
+    bookId: books[0]?.id,
+    userQuery: '&',
+    userId: users[0]?.id,
+  });
+  const [filterParams, setFilterParams] = useState<any>(initialState);
 
   useEffect(() => {
-    setFilterParams({
-      status: 'status=active',
-      bookQuery: '&',
-      bookId: books[0]?.id,
-      userQuery: '&',
-      userId: users[0]?.id,
-    });
-  }, [users]);
+    setFilterParams(initialState);
+  }, [books]);
 
   const queryBuilder = () => {
     const {status, bookQuery, bookId, userQuery, userId} = filterParams;
@@ -42,7 +43,7 @@ const BookingFilterModal: React.FC<Props> = ({
       show={showFilterModal} 
       onHide={() => {
         setShowFilterModal(false);
-        setQuery('status=active');
+        setFilterParams(initialState);
       }}
       style={{
         display: 'grid',
@@ -108,31 +109,34 @@ const BookingFilterModal: React.FC<Props> = ({
               ))}
             </Form.Select>
           </Form.Group>
-          <Form.Group>
-            <Form.Check 
-              type="switch"
-              label="Filter by user"
-              onChange={({target}) => setFilterParams({
-                ...filterParams,
-                userQuery: target.checked ? 'userId=' : ''
-              })}
-            />
-            <Form.Select
-              onChange={({target}) => setFilterParams({
-                ...filterParams,
-                userId: target.value
-              })}
-            >
-              {users.map(({id, name}) => (
-                <option
-                  key={id}
-                  value={id}
-                >
-                  {name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
+          {
+            role === 'admin' &&
+            <Form.Group>
+              <Form.Check 
+                type="switch"
+                label="Filter by user"
+                onChange={({target}) => setFilterParams({
+                  ...filterParams,
+                  userQuery: target.checked ? 'userId=' : ''
+                })}
+              />
+              <Form.Select
+                onChange={({target}) => setFilterParams({
+                  ...filterParams,
+                  userId: target.value
+                })}
+              >
+                {users.map(({id, name}) => (
+                  <option
+                    key={id}
+                    value={id}
+                  >
+                    {name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          }
         </Form>
         <Button
           onClick={() => action(queryBuilder())}>

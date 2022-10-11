@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { IContext, MyContext } from '../../context/MyContext';
@@ -11,7 +11,11 @@ interface Props {
 }
 
 const BooksButtonsContainer: React.FC<Props> = ({setShowCreateModal, setShowFilterModal}) => {
-  const { showRemoveFilterButton, role } = useContext(MyContext) as IContext;
+  const { showRemoveFilterButton, role, setShowRemoveFilterButton } = useContext(MyContext) as IContext;
+
+  useEffect(() => {
+    setShowRemoveFilterButton(false);
+  }, []);
 
   return (
     <Container
