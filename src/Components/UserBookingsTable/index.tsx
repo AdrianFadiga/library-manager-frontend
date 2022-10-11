@@ -13,7 +13,8 @@ const UserBookingsTable: React.FC<Props> = ({bookings}) => {
           <th>#</th>
           <th>Title</th>
           <th>Booking Date</th>
-          <th>Return Date</th>
+          {bookings[0]?.returnDate &&
+          <th>Return Date</th>}
           <th>Status</th>
         </tr>
       </thead>
@@ -23,7 +24,8 @@ const UserBookingsTable: React.FC<Props> = ({bookings}) => {
             <td>{i + 1}</td>
             <td>{title}</td>
             <td>{new Date(bookingDate).toLocaleDateString()}</td>
-            <td>{new Date(returnDate).toLocaleDateString()}</td>
+            {returnDate &&
+            <td>{new Date(returnDate).toLocaleDateString()}</td>}
             <td>{status}</td>
           </tr>
         ))}
