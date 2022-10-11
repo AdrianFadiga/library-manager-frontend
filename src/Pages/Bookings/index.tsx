@@ -18,7 +18,6 @@ function Bookings() {
   const [books, setBooks] = useState<IBook[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>('status=active');
 
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ function Bookings() {
     verifyUser();
   }, []);
 
-  const getBookings = async () => {
+  const getBookings = async (query = 'status=active') => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
     const endPoint = isAdmin ? `bookings/filter?${query}` : `bookings/me/filter?${query}`;
     const response = await requestAPI<IBooking[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
@@ -45,7 +44,7 @@ function Bookings() {
   };
 
   const getUsers = async () => {
-    if (role === 'admin') {
+    if (isAdmin) {
       const token = JSON.parse(localStorage.getItem('authLibrary') as string);
       const endPoint = 'users/filter?role=user';
       const response = await requestAPI<IUser[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
@@ -57,14 +56,6 @@ function Bookings() {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
     const response = await requestAPI<IBook[]>('GET', {}, 'books', {Authorization: `Bearer ${token}`});
     setBooks(response.data);
-  };
-
-  const getBookingsByQuery = async (query: string) => {
-    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    const endPoint = role === 'admin' ? `bookings/filter?${query}` : `bookings/me/filter?${query}`;
-    const response = await requestAPI<IBooking[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
-
-    setBookings(response.data);
   };
 
   useEffect(() => {
@@ -82,8 +73,7 @@ function Bookings() {
       <BookingFilterModal
         showFilterModal={showFilterModal}
         setShowFilterModal={setShowFilterModal}
-        action={getBookingsByQuery}
-        setQuery={setQuery}
+        action={getBookings}
         books={books}
         users={users}
         role={role}    
