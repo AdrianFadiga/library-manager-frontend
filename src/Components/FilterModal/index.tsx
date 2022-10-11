@@ -48,13 +48,13 @@ const FilterModal: React.FC<Props> = ({showModal, setShowModal, categories}) => 
               onChange={({target}) => setTitle(target.value)}
               value={title}
               className={style.formInput}
-              disabled={!title}
             />
           </Form.Label>
           <Container
             className={style.formContainer}
           >
             <Button
+              disabled={!title}
               className={style.formButton}
               onClick={() => findByQuery('title', title)}>
             Filter
