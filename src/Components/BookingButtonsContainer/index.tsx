@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { CgAddR } from 'react-icons/cg';
+import {BiFileFind} from 'react-icons/bi';
 
 interface Props {
     setShowFilterModal: (value: boolean) => void
@@ -18,7 +18,7 @@ const BookingButtonsContainer: React.FC<Props> = ({setShowFilterModal}) => {
         marginTop: '5px'
       }}>
       <Button size="lg" onClick={() => setShowFilterModal(true)}>
-        <CgAddR />
+        <BiFileFind />
       </Button>
     </Container>
   );
