@@ -25,7 +25,7 @@ const BookCard: React.FC<Props> = ({book}) => {
       <Card.Header
         className={style.cardHeader}>
         <NavDropdown
-          title="..."
+          title=""
         >
           <NavDropdown.Item
             onClick={() => setShowEditModal(true)}

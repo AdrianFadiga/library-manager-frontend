@@ -52,7 +52,6 @@ function Books() {
   }, []);
 
   return (
-    // <section className={style.bookPage}>
     <Container fluid="true">
       <Header />
       <BooksButtonsContainer 
