@@ -4,6 +4,12 @@
 
 Library management application.
 
+## Running Back-end
+
+Instructions at:
+
+https://github.com/AdrianFadiga/library-manager-backend
+
 ## Installation
 
 ```bash
@@ -18,6 +24,3 @@ $ npm install
 $ npm run dev
 ```
 
-## Running Front-End
-
-https://github.com/AdrianFadiga/library-manager-backend
