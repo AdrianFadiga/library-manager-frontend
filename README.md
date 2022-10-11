@@ -7,8 +7,12 @@ https://github.com/AdrianFadiga/library-manager-backend
 inicializar o BackEnd, conforme instruções no repositório acima.
 
 Usuários cadastrados:
+`
 email: admin@teste.com
 senha: teste
+`
 
+`
 email: usuario@teste.com
 senha: teste
+`
