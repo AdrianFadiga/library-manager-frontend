@@ -76,7 +76,8 @@ const EditBookModal: React.FC<Props> = ({showModal, setShowModal, categoryId, bo
             <Form.Control
               className={style.formInput} 
               type="text" 
-              placeholder="title" 
+              placeholder="title"
+              maxLength={35} 
               onChange={({target}) => setTitle(target.value)}
               value={title}
             />
