@@ -23,6 +23,3 @@ $ npm install
 # development
 $ npm run dev
 ```
-
-localhost:3000
-
