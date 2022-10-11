@@ -45,10 +45,12 @@ function Bookings() {
   };
 
   const getUsers = async () => {
-    const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    const endPoint = 'users/filter?role=user';
-    const response = await requestAPI<IUser[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
-    setUsers(response.data);
+    if (role === 'admin') {
+      const token = JSON.parse(localStorage.getItem('authLibrary') as string);
+      const endPoint = 'users/filter?role=user';
+      const response = await requestAPI<IUser[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
+      setUsers(response.data);
+    }
   };
 
   const getBooks = async () => {
@@ -59,7 +61,8 @@ function Bookings() {
 
   const getBookingsByQuery = async (query: string) => {
     const token = JSON.parse(localStorage.getItem('authLibrary') as string);
-    const response = await requestAPI<IBooking[]>('GET', {}, `bookings/filter?${query}`, {Authorization: `Bearer ${token}`});
+    const endPoint = role === 'admin' ? `bookings/filter?${query}` : `bookings/me/filter?${query}`;
+    const response = await requestAPI<IBooking[]>('GET', {}, endPoint, {Authorization: `Bearer ${token}`});
 
     setBookings(response.data);
   };
@@ -82,7 +85,8 @@ function Bookings() {
         action={getBookingsByQuery}
         setQuery={setQuery}
         books={books}
-        users={users}    
+        users={users}
+        role={role}    
       />
       <Container>
         { !isAdmin &&
